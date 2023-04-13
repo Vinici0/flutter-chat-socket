@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_chat_socket/screen/login_screen.dart';
 import 'package:flutter_chat_socket/screen/usuarios_screen.dart';
 import 'package:flutter_chat_socket/services/auth_service.dart';
+import 'package:flutter_chat_socket/services/socket_service.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -24,6 +25,7 @@ class LoadingScreen extends StatelessWidget {
 
   Future checkLoginState(BuildContext context) async {
     final authService = Provider.of<AuthService>(context, listen: false);
+    final socketService = Provider.of<SocketService>(context, listen: false);
 
     final autenticado = await authService.isLoggedIn();
 
@@ -31,6 +33,7 @@ class LoadingScreen extends StatelessWidget {
       // TODO: conectar al socket server
       // Navigator.pushReplacementNamed(context, 'usuarios');
       // ignore: use_build_context_synchronously
+      socketService.connect();
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(

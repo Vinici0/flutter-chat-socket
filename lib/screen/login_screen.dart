@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_socket/helpers/mostrar_alerta.dart';
 import 'package:flutter_chat_socket/services/auth_service.dart';
+import 'package:flutter_chat_socket/services/socket_service.dart';
 import 'package:flutter_chat_socket/witget/boton_login.dart';
 import 'package:flutter_chat_socket/witget/custom_input.dart';
 import 'package:flutter_chat_socket/witget/labels_login.dart';
@@ -62,6 +63,7 @@ class __FromState extends State<_From> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       child: Column(children: [
@@ -86,8 +88,9 @@ class __FromState extends State<_From> {
                     final loginOk = await authService.login(
                         emailController.text.trim(),
                         passwordController.text.trim());
-                    if (loginOk) {
+                    if (loginOk == true) {
                       // TODO: Conectar a nuestro socket server
+                      socketService.connect();
                       Navigator.pushReplacementNamed(context, 'usuarios');
                     } else {
                       // Mostrar alerta
