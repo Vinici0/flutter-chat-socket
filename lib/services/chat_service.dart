@@ -6,7 +6,7 @@ import 'package:flutter_chat_socket/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
 class ChatService with ChangeNotifier {
-  late Usuario usuarioPara;
+  late Usuario usuarioPara; // TODO: Importante para el chat privado
 
   Future<List<Mensaje>> getChat(String usuarioID) async {
     final uri = Uri.parse('${Environment.apiUrl}/mensajes/$usuarioID');

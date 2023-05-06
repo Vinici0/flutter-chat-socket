@@ -49,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           animationController: AnimationController(
               vsync: this, duration: const Duration(milliseconds: 0))
             ..forward(),
+          nombre: '',
         ));
     setState(() {
       _messages.insertAll(0, history);
@@ -61,6 +62,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       uid: payload['de'],
       animationController: AnimationController(
           vsync: this, duration: const Duration(milliseconds: 300)),
+      nombre: '',
     );
     setState(() {
       _messages.insert(0, message);
@@ -168,10 +170,12 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     _focusNode.requestFocus();
     //Para que el cursor se quede en el TextField y no en el boton
     final newMessage = ChatMessage(
-        uid: authService.usuario!.uid,
-        texto: texto,
-        animationController: AnimationController(
-            vsync: this, duration: const Duration(milliseconds: 200)));
+      uid: authService.usuario!.uid,
+      texto: texto,
+      animationController: AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 200)),
+      nombre: '',
+    );
     _messages.insert(0, newMessage);
     newMessage.animationController.forward();
     setState(() {

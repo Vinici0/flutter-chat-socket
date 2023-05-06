@@ -11,8 +11,11 @@ class SocketService with ChangeNotifier {
 
   ServerStatus get serverStatus => this._serverStatus;
 
-  IO.Socket get socket => this._socket;
-  Function get emit => this._socket.emit;
+  IO.Socket get socket => this
+      ._socket; // Para poder usar el socket en cualquier parte de la app sin necesidad de usar el provider
+  Function get emit => this
+      ._socket
+      .emit; // Emitir eventos al servidor sin necesidad de usar el provider
 
   void connect() async {
     final token = await AuthService.getToken();
@@ -33,6 +36,7 @@ class SocketService with ChangeNotifier {
       notifyListeners();
     });
 
+    //Para cambiar el icono de la app cuando se desconecte
     this._socket.on('disconnect', (_) {
       print('disconnect');
       this._serverStatus = ServerStatus.Offline;

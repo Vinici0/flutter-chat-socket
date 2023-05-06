@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_socket/models/sales_response.dart';
 import 'package:flutter_chat_socket/models/usuario.dart';
 import 'package:flutter_chat_socket/screen/login_screen.dart';
+import 'package:flutter_chat_socket/screen/sales.screen.dart';
 import 'package:flutter_chat_socket/services/auth_service.dart';
 import 'package:flutter_chat_socket/services/chat_service.dart';
+import 'package:flutter_chat_socket/services/salas_services.dart';
 import 'package:flutter_chat_socket/services/socket_service.dart';
 import 'package:flutter_chat_socket/services/usuarios_service.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +25,10 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
       RefreshController(initialRefresh: false);
 
   final usuuarioService = new UsuariosService();
+  final salaService = new SalasServices();
 
   List<Usuario> usuarios = [];
+  List<Sala> salas = [];
 
   @override
   void initState() {
@@ -35,7 +40,6 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false);
     final socketService = Provider.of<SocketService>(context);
-    print(socketService.serverStatus);
 
     return Scaffold(
       appBar: AppBar(
@@ -67,6 +71,13 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
           onRefresh: _cargarUsuarios,
           header: WaterDropHeader(),
           child: _listViewUsuarios()),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, SalesScreen.salesroute);
+        },
+        // backgroundColor: Colors.green,
+        child: const Icon(Icons.group_add),
+      ),
     );
   }
 
